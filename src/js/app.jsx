@@ -8,6 +8,8 @@ const InvoiceApp = () => {
   const [showPaymentSuccessModal, setShowPaymentSuccessModal] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
 
+  console.log("apppppp");
+
   const submitPaymentForm = function (e) {
     e.preventDefault();
 
@@ -267,7 +269,15 @@ const InvoiceApp = () => {
         </div>
       </div>
       {showPaymentModal && <PaymentModal />}
-      {/*
+    </div>
+  );
+};
+
+const container = document.getElementById("app");
+const root = createRoot(container);
+root.render(<InvoiceApp />);
+
+/*
       <div className={"payment-modal " + (showPaymentModal ? "" : "payment-modal--hidden") + (formSubmitting ? "payment-modal--submitting" : "")} onClick={(e) => setShowPaymentModal(false)}>
           <div className="payment-modal__container center-block" onClick={(e) => e.stopPropagation()}>
               <form id="paymentForm" method="post" action="/" onSubmit={submitPaymentForm}>
@@ -341,11 +351,4 @@ const InvoiceApp = () => {
               <div>Your payment has been received, and you will be emailed a confirmation.</div>
               <button className="payment-success-modal__container__button button" style={{"margin": "1em auto"}} onClick={(e) => setShowPaymentSuccessModal(false)}>Close</button>
           </div>
-      </div> */}
-    </div>
-  );
-};
-
-const container = document.getElementById("app");
-const root = createRoot(container);
-root.render(<InvoiceApp />);
+      </div> */
