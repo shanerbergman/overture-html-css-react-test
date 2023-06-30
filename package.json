@@ -1,16 +1,14 @@
 {
-  "name": "webpack-build",
+  "name": "shane-bergman-vite-build",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "http-server",
-    "development": "mix",
-    "watch": "mix watch",
-    "production": "mix --production"
+    "build": "vite build",
+    "dev": "vite serve"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.22.5",
     "http-server": "^14.1.1",
     "laravel-mix": "^6.0.20",
     "resolve-url-loader": "^5.0.0",
