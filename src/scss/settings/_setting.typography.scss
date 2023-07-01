@@ -2,40 +2,42 @@
 
 // google fonts
 
-$alt-serif-weights: '800';
-$sans-serif-weights: '400;500;600';
+$alt-serif-weights: "800";
+$sans-serif-weights: "400;500;600";
 
-@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@#{$alt-serif-weights}&family=Jost:wght@#{$sans-serif-weights}&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@#{$alt-serif-weights}&family=Jost:wght@#{$sans-serif-weights}&display=swap");
 
 // packaged Georgia font
 @font-face {
-  font-family: 'Overture Georgia';
+  font-family: "Overture Georgia";
   font-style: normal;
   font-weight: 500;
-  src: local('Georgia Regular'), url('fonts/georgia/georgia.woff') format('woff');
+  src: local("Georgia Regular"),
+    url("fonts/georgia/georgia.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Overture Georgia';
+  font-family: "Overture Georgia";
   font-style: italic;
   font-weight: 500;
-  src: local('Georgia Italic'), url('fonts/georgia/georgiai.woff') format('woff');
+  src: local("Georgia Italic"),
+    url("fonts/georgia/georgiai.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Overture Georgia';
+  font-family: "Overture Georgia";
   font-style: normal;
   font-weight: 700;
-  src: local('Georgia Bold'), url('fonts/georgia/georgiab.woff') format('woff');
+  src: local("Georgia Bold"), url("fonts/georgia/georgiab.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Overture Georgia';
+  font-family: "Overture Georgia";
   font-style: italic;
   font-weight: normal;
-  src: local('Georgia Bold Italic'), url('fonts/georgia/georgiaz.woff') format('woff');
+  src: local("Georgia Bold Italic"),
+    url("fonts/georgia/georgiaz.woff") format("woff");
 }
-
 
 /* Text Settings */
 .text {

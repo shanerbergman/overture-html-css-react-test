@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { createRoot } from "react-dom/client";
 import PaymentModal from "../PaymentModal/PaymentModal";
+import PaymentSuccessModal from "../PaymentSuccessModal/PaymentSuccessModal";
 
 const Invoice = () => {
   const [paymentMade, setPaymentMade] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showPaymentSuccessModal, setShowPaymentSuccessModal] = useState(false);
 
   return (
     <div>
@@ -196,7 +197,15 @@ const Invoice = () => {
         </div>
       </div>
       {showPaymentModal && (
-        <PaymentModal setShowPaymentModal={setShowPaymentModal} />
+        <PaymentModal
+          setShowPaymentModal={setShowPaymentModal}
+          setShowPaymentSuccessModal={setShowPaymentSuccessModal}
+        />
+      )}
+      {showPaymentSuccessModal && (
+        <PaymentSuccessModal
+          setShowPaymentSuccessModal={setShowPaymentSuccessModal}
+        />
       )}
     </div>
   );

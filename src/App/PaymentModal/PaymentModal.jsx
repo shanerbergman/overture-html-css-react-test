@@ -1,8 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PaymentForm from "./PaymentForm";
+import PaymentMethod from "./PaymentMethod";
+import BankAccount from "./BankAccount";
+import CreditCard from "./CreditCard";
+import PaymentErrors from "./PaymentErrors";
+import PaymentSubmit from "./PaymentSubmit";
 
-const PaymentModal = ({ setShowPaymentModal }) => {
-  const [showPaymentSuccessModal, setShowPaymentSuccessModal] = useState(false);
+const PaymentModal = ({ setShowPaymentModal, setShowPaymentSuccessModal }) => {
+  const [paymentMethod, setPaymentMethod] = useState("bankAccount");
+
   const [formSubmitting, setFormSubmitting] = useState(false);
+  const [errors, setErrors] = useState(null);
+
+  const [bankData, setBankData] = useState({
+    accountNumber: "",
+    routingNumber: "",
+    nameOnAccount: "",
+    accountType: "",
+  });
+
+  const [cardData, setCardData] = useState({
+    fullName: "",
+    cardno: "",
+    expirydt: "",
+    cvc: "",
+    zip: "",
+  });
 
   const submitPaymentForm = (e) => {
     e.preventDefault();
@@ -17,41 +40,8 @@ const PaymentModal = ({ setShowPaymentModal }) => {
     setErrors(errors, $errorFields);
 
     var authData = { paymentApiKey: "TestPaymentKey" };
-
-    var cardData = {};
-    var bankData = {};
     var secureData = {};
     secureData.authData = authData;
-
-    let paymentMethod = $("[name=paymentMethod]:checked").val();
-    if (paymentMethod == "creditCard") {
-      cardData.cardNumber = cardJs.getCardNumber().replace(/[^0-9]/gi, "");
-      cardData.month = cardJs.getExpiryMonth().replace(/[^0-9]/gi, "");
-      cardData.year = cardJs.getExpiryYear().replace(/[^0-9]/gi, "");
-      cardData.cardCode = cardJs.getCvc().replace(/[^0-9]/gi, "");
-      cardData.zip = $("[name=zipCode]").val().trim();
-      cardData.fullName = cardJs.getName().trim();
-      secureData.cardData = cardData;
-      if (cardData.month.length == 0 || cardData.year.length == 0) {
-        errors.push("Please provide a valid expiration date.");
-      }
-    } else if (paymentMethod == "bankAccount") {
-      let accountNumber = $("[name=accountNumber]").val().trim();
-      let accountNumberConfirm = $("[name=accountNumberConfirm]").val().trim();
-      if (accountNumber != accountNumberConfirm) {
-        errors.push("Account Number and Confirm Account Number do not match.");
-      }
-      let nameOnAccount = $("[name=nameOnAccount]").val().trim();
-      let routingNumber = $("[name=routingNumber]").val().trim();
-      let accountType = $("[name=accountType]").val().trim();
-      bankData = {
-        accountNumber: accountNumber,
-        routingNumber: routingNumber,
-        nameOnAccount: nameOnAccount,
-        accountType: accountType,
-      };
-      secureData.bankData = bankData;
-    }
 
     if (errors.length > 0) {
       setErrors(errors, $errorFields);
@@ -68,198 +58,56 @@ const PaymentModal = ({ setShowPaymentModal }) => {
       secureData
     );
 
-    setShowPaymentModal(false);
-    setShowPaymentSuccessModal(true);
-    setFormSubmitting(false);
+    setTimeout(() => {
+      setShowPaymentModal(false);
+      setShowPaymentSuccessModal(true);
+      //setFormSubmitting(false);
+    }, 1000);
   };
 
+  useEffect(() => {
+    if (paymentMethod === "bankAccount") {
+      setBankData({
+        ...bankData,
+        nameOnAccount: cardData.fullName,
+      });
+    }
+    if (paymentMethod === "creditCard") {
+      setCardData({
+        ...cardData,
+        fullName: bankData.nameOnAccount,
+      });
+    }
+  }, [paymentMethod]);
+
   return (
-    <>
+    <div
+      className={
+        "payment-modal " //+ (formSubmitting ? "payment-modal--submitting" : "")
+      }
+      onClick={(e) => setShowPaymentModal(false)}
+    >
       <div
-        className={
-          "payment-modal " + (formSubmitting ? "payment-modal--submitting" : "")
-        }
-        onClick={(e) => setShowPaymentModal(false)}
+        className="payment-modal__container center-block"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div
-          className="payment-modal__container center-block"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <form
-            id="paymentForm"
-            method="post"
-            action="/"
-            onSubmit={submitPaymentForm}
-          >
-            <div className="payment-modal__form">
-              <div className="payment-modal__payment-method">
-                <input
-                  id="bankAccount"
-                  type="radio"
-                  name="paymentMethod"
-                  defaultChecked="checked"
-                  value="bankAccount"
-                />{" "}
-                <label htmlFor="bankAccount">Bank Account</label>
-                <input
-                  id="creditCard"
-                  type="radio"
-                  name="paymentMethod"
-                  value="creditCard"
-                />{" "}
-                <label htmlFor="creditCard">Credit Card</label>
-              </div>
-              <div className="payment-modal__inputs payment-modal__inputs--bank-account">
-                <div className="payment-modal__inputs__input--full-width">
-                  <label htmlFor="nameOnAccount">Name on Account</label>
-                  <input
-                    type="text"
-                    name="nameOnAccount"
-                    autoComplete="cc-name"
-                  />
-                </div>
-                <div className="payment-modal__inputs__input">
-                  <label htmlFor="accountType">Account Type</label>
-                  <select name="accountType">
-                    <option value=""></option>
-                    <option value="checking">Checking</option>
-                    <option value="businessChecking">Business Checking</option>
-                    <option value="savings">Savings</option>
-                  </select>
-                </div>
-                <div className="payment-modal__inputs__input">
-                  <label htmlFor="routingNumber">Routing Number</label>
-                  <input
-                    type="text"
-                    name="routingNumber"
-                    id="routingNumber"
-                    inputMode="numeric"
-                    maxLength="9"
-                  />
-                </div>
-                <div className="payment-modal__inputs__input">
-                  <label htmlFor="accountNumber">Account Number</label>
-                  <input
-                    type="text"
-                    name="accountNumber"
-                    id="accountNumber"
-                    inputMode="numeric"
-                    maxLength="17"
-                  />
-                </div>
-                <div className="payment-modal__inputs__input">
-                  <label htmlFor="accountNumberConfirm">
-                    Confirm Account Number
-                  </label>
-                  <input
-                    type="text"
-                    name="accountNumberConfirm"
-                    id="accountNumberConfirm"
-                    inputMode="numeric"
-                    maxLength="17"
-                  />{" "}
-                  <br />
-                  <br />
-                </div>
-              </div>
-              <div
-                id="card-js"
-                className="payment-modal__inputs payment-modal__inputs--credit-card"
-                style={{ display: "none" }}
-              >
-                <div className="payment-modal__inputs__input payment-modal__inputs__input--full-width">
-                  <label htmlFor="cardholderName">Cardholder Name</label>
-                  <input type="text" name="cardholderName" className="name" />
-                </div>
-                <div className="payment-modal__inputs__input payment-modal__inputs__input--full-width">
-                  <label htmlFor="cardNumber">Card Number</label>
-                  <input
-                    type="text"
-                    className="card-number"
-                    name="cardNumber"
-                    placeholder="1234 1234 1234 1234"
-                    inputMode="numeric"
-                    autoComplete="cc-number"
-                  />
-                </div>
-                <div className="payment-modal__inputs__input">
-                  <label htmlFor="expiration">Expiration</label>
-                  <input
-                    type="text"
-                    name="expMonth"
-                    className="expiry-month"
-                    inputMode="numeric"
-                    autoComplete="cc-exp-month"
-                  />
-                  <input
-                    type="text"
-                    name="expYear"
-                    className="expiry-year"
-                    inputMode="numeric"
-                    autoComplete="cc-exp-year"
-                  />
-                </div>
-                <div className="payment-modal__inputs__input payment-modal__inputs__input--one-sixth">
-                  <label htmlFor="cardCode">CVC</label>
-                  <input
-                    type="text"
-                    name="cardCode"
-                    className="cvc"
-                    inputMode="numeric"
-                    autoComplete="cc-csc"
-                  />
-                </div>
-                <div className="payment-modal__inputs__input payment-modal__inputs__input--one-third">
-                  <label htmlFor="zipCode">Zip Code</label>
-                  <input
-                    type="text"
-                    name="zipCode"
-                    inputMode="numeric"
-                    maxLength="20"
-                  />
-                </div>
-              </div>
-              <div className="payment-error"></div>
-              <div className="payment-modal__submit-container">
-                <button
-                  className="pay-button"
-                  type="submit"
-                  disabled={formSubmitting}
-                >
-                  Pay
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+        <PaymentForm submitPaymentForm={submitPaymentForm}>
+          <PaymentMethod
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+          />
+          {paymentMethod === "bankAccount" && (
+            <BankAccount bankData={bankData} setBankData={setBankData} />
+          )}
+          {paymentMethod === "creditCard" && (
+            <CreditCard cardData={cardData} setCardData={setCardData} />
+          )}
+
+          <PaymentErrors />
+          <PaymentSubmit />
+        </PaymentForm>
       </div>
-      <div
-        className={
-          "payment-success-modal " +
-          (showPaymentSuccessModal ? "" : "payment-success-modal--hidden")
-        }
-        onClick={(e) => setShowPaymentSuccessModal(false)}
-      >
-        <div
-          className="payment-success-modal__container"
-          style={{ textAlign: "center" }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <h2>Payment Received</h2>
-          <div>
-            Your payment has been received, and you will be emailed a
-            confirmation.
-          </div>
-          <button
-            className="payment-success-modal__container__button button"
-            style={{ margin: "1em auto" }}
-            onClick={(e) => setShowPaymentSuccessModal(false)}
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 
