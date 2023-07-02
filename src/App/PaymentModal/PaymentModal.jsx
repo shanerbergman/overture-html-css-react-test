@@ -1,22 +1,37 @@
 import React, { useState, useEffect } from "react";
-import PaymentForm from "./PaymentForm";
-import PaymentMethod from "./PaymentMethod";
-import BankAccount from "./BankAccount";
-import CreditCard from "./CreditCard";
-import PaymentErrors from "./PaymentErrors";
-import PaymentSubmit from "./PaymentSubmit";
+import PaymentForm from "./Form/PaymentForm";
+import PaymentAmount from "./Form/Header/PaymentAmount";
+import PaymentMethod from "./Form/Header/PaymentMethod";
+import BankAccount from "./Form/Body/BankAccount";
+import CreditCard from "./Form/Body/CreditCard";
+import Disclaimer from "./Form/Footer/Disclaimer";
+import PaymentErrors from "./Form/Footer/PaymentErrors";
+import PaymentSubmit from "./Form/Footer/PaymentSubmit";
 
-const PaymentModal = ({ setShowPaymentModal, setShowPaymentSuccessModal }) => {
-  const [paymentMethod, setPaymentMethod] = useState("bankAccount");
+const PaymentModal = ({
+  totalDue,
+  setShowPaymentModal,
+  setShowPaymentSuccessModal,
+}) => {
+  const [paymentMethod, setPaymentMethod] = useState("creditCard");
 
   const [formSubmitting, setFormSubmitting] = useState(false);
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState({
+    cardData: {
+      fullName: true,
+      cardno: true,
+      expirydt: true,
+      cvc: true,
+      zip: true,
+    },
+  });
 
   const [bankData, setBankData] = useState({
     accountNumber: "",
     routingNumber: "",
     nameOnAccount: "",
     accountType: "",
+    accountNumberConfirm: "",
   });
 
   const [cardData, setCardData] = useState({
@@ -35,33 +50,14 @@ const PaymentModal = ({ setShowPaymentModal, setShowPaymentSuccessModal }) => {
       return;
     }
 
-    let errors = [];
-    let $errorFields = [];
-    setErrors(errors, $errorFields);
-
     var authData = { paymentApiKey: "TestPaymentKey" };
     var secureData = {};
     secureData.authData = authData;
 
-    if (errors.length > 0) {
-      setErrors(errors, $errorFields);
-      setFormSubmitting(false);
-      return;
-    }
-
-    // Future code will submit the object above
-    console.log(
-      "This will be submitted:",
-      authData,
-      cardData,
-      bankData,
-      secureData
-    );
-
     setTimeout(() => {
       setShowPaymentModal(false);
       setShowPaymentSuccessModal(true);
-      //setFormSubmitting(false);
+      setFormSubmitting(false);
     }, 1000);
   };
 
@@ -82,9 +78,7 @@ const PaymentModal = ({ setShowPaymentModal, setShowPaymentSuccessModal }) => {
 
   return (
     <div
-      className={
-        "payment-modal " //+ (formSubmitting ? "payment-modal--submitting" : "")
-      }
+      className={"payment-modal "}
       onClick={(e) => setShowPaymentModal(false)}
     >
       <div
@@ -92,19 +86,41 @@ const PaymentModal = ({ setShowPaymentModal, setShowPaymentSuccessModal }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <PaymentForm submitPaymentForm={submitPaymentForm}>
+          {/* ---- Header ----- */}
+          <PaymentAmount totalDue={totalDue} />
           <PaymentMethod
             paymentMethod={paymentMethod}
             setPaymentMethod={setPaymentMethod}
           />
-          {paymentMethod === "bankAccount" && (
-            <BankAccount bankData={bankData} setBankData={setBankData} />
-          )}
-          {paymentMethod === "creditCard" && (
-            <CreditCard cardData={cardData} setCardData={setCardData} />
-          )}
-
-          <PaymentErrors />
-          <PaymentSubmit />
+          {/* ---- Body ----- */}
+          <div className="form-body">
+            {paymentMethod === "creditCard" && (
+              <CreditCard
+                cardData={cardData}
+                setCardData={setCardData}
+                errors={errors}
+              />
+            )}
+            {paymentMethod === "bankAccount" && (
+              <BankAccount
+                bankData={bankData}
+                setBankData={setBankData}
+                errors={errors}
+              />
+            )}
+          </div>
+          {/* ---- Footer ----- */}
+          <Disclaimer totalDue={totalDue} />
+          <PaymentErrors
+            cardData={cardData}
+            errors={errors}
+            setErrors={setErrors}
+          />
+          <PaymentSubmit
+            errors={errors}
+            setErrors={setErrors}
+            totalDue={totalDue}
+          />
         </PaymentForm>
       </div>
     </div>
