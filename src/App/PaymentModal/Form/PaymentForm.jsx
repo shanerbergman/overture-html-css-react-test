@@ -9,7 +9,7 @@ const PaymentForm = ({ children, submitPaymentForm }) => {
         action="/"
         onSubmit={submitPaymentForm}
       >
-        <div className="payment-modal__form ">{children}</div>
+        <div className="payment-modal__form">{children}</div>
       </form>
     </>
   );

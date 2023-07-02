@@ -3,9 +3,7 @@ import React from "react";
 const PaymentSuccessModal = ({ setShowPaymentSuccessModal }) => {
   return (
     <div
-      className={
-        "payment-success-modal " // + (showPaymentSuccessModal ? "" : "payment-success-modal--hidden")
-      }
+      className={"payment-success-modal"}
       onClick={(e) => setShowPaymentSuccessModal(false)}
     >
       <div
