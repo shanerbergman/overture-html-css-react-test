@@ -19,7 +19,6 @@
 
 /* GENERIC ===================== High-level, far reaching styles, ie normalize.css */
 
-
 /* ELEMENTS ===================== In this layer we put styles for bare, unclassed HTML elements. */
 @import "elements/_element.base.scss";
 
@@ -57,24 +56,23 @@ button {
   padding: 1rem 3.2rem 1rem 3.2rem;
 }
 
-.payment-modal, .payment-success-modal {
+.payment-modal,
+.payment-success-modal {
   position: fixed;
   inset: 0px;
-  background-color: rgba(0,0,0,0.55);
+  background-color: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
 
   &--hidden {
-    display:none;
+    display: none;
   }
-
-
 
   &__container {
     $paddingTop: 20px;
     $paddingLeftRight: 20px;
-    $paddingBottom:20px;
+    $paddingBottom: 20px;
     position: absolute;
     border: 1px solid rgb(204, 204, 204);
     background: rgb(255, 255, 255);
@@ -89,12 +87,14 @@ button {
 }
 
 .payment-modal {
-  &--submitting, &--submitting input, &--submitting select {
+  &--submitting,
+  &--submitting input,
+  &--submitting select {
     cursor: wait;
   }
   &__form {
     font-size: 2rem;
-    text-align: center
+    text-align: center;
   }
   &__payment-method {
     label {
@@ -144,11 +144,11 @@ button {
       margin-bottom: 3px;
       display: block;
     }
-    input, select {
-      border-color: #555;
-      border-radius: 9px;
+    input,
+    select {
+      border-radius: 4px;
       color: #1f1f1f;
-      height: 46px;
+      height: 36px;
       margin-top: 0;
       width: 100%;
 
@@ -156,7 +156,7 @@ button {
         border-color: red;
       }
     }
-    select { 
+    select {
       -webkit-appearance: menulist;
       padding: 6px 10px;
     }
@@ -177,7 +177,6 @@ button {
     }
   }
 }
-
 
 %invoice-header {
   background-color: $bright-grey;
@@ -242,7 +241,9 @@ button {
     }
 
     &__issues {
-      @include media("<=tablet") { grid-area: c; }
+      @include media("<=tablet") {
+        grid-area: c;
+      }
       &_field {
         width: 210px;
         display: flex;
@@ -258,12 +259,17 @@ button {
 
     &_logo {
       max-width: 300px;
-      @include media("<=tablet") { grid-area: a; margin: 0 auto; }
+      @include media("<=tablet") {
+        grid-area: a;
+        margin: 0 auto;
+      }
     }
 
     &__creator {
       font-size: 20px;
-      @include media("<=tablet") { grid-area: b; }
+      @include media("<=tablet") {
+        grid-area: b;
+      }
     }
   }
 
@@ -459,8 +465,6 @@ button {
     }
   }
 
-  
-
   .invoice-table {
     margin-top: 4rem;
     &--empty {
@@ -562,15 +566,10 @@ button {
               }
             }
           }
-
         }
       }
     }
-
-
-
   }
-
 
   &__mark {
     opacity: 0.5;
@@ -589,7 +588,9 @@ button {
       display: block;
       height: 32px;
 
-      @include media("<=tablet") { margin: 0 auto; }
+      @include media("<=tablet") {
+        margin: 0 auto;
+      }
     }
   }
 }
@@ -602,7 +603,9 @@ button {
   line-height: 1.5715;
 
   &__issues {
-    @include media("<=tablet") { grid-area: c; }
+    @include media("<=tablet") {
+      grid-area: c;
+    }
   }
 
   &__header {
@@ -654,7 +657,9 @@ button {
   }
 
   &__creator {
-    @include media("<=tablet") { grid-area: b; }
+    @include media("<=tablet") {
+      grid-area: b;
+    }
   }
 
   &--client-facing .trustrequest-preview__header {
@@ -724,7 +729,9 @@ button {
   line-height: 1.5715;
 
   &__issues {
-    @include media("<=tablet") { grid-area: c; }
+    @include media("<=tablet") {
+      grid-area: c;
+    }
   }
 
   &__header {
@@ -776,7 +783,9 @@ button {
   }
 
   &__creator {
-    @include media("<=tablet") { grid-area: b; }
+    @include media("<=tablet") {
+      grid-area: b;
+    }
   }
 
   &--client-facing .trustrequest-preview__header {
@@ -822,7 +831,7 @@ button {
       gap: 3rem;
       padding-bottom: 8rem;
     }
-    
+
     div {
       &:first-child {
         width: auto;
@@ -855,7 +864,6 @@ button {
   }
 
   &--paid {
-    
     background: #14d56a;
   }
   &--preview {
@@ -863,7 +871,7 @@ button {
   }
 
   &--client-facing {
-    text-align: center; 
+    text-align: center;
     position: relative;
     z-index: 1;
   }

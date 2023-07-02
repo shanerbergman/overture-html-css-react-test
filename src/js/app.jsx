@@ -8,8 +8,6 @@ const InvoiceApp = () => {
   const [showPaymentSuccessModal, setShowPaymentSuccessModal] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
 
-  console.log("apppppp");
-
   const submitPaymentForm = function (e) {
     e.preventDefault();
 

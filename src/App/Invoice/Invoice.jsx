@@ -6,6 +6,11 @@ const Invoice = () => {
   const [paymentMade, setPaymentMade] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showPaymentSuccessModal, setShowPaymentSuccessModal] = useState(false);
+  const [totalDue, setTotalDue] = useState("2500.00");
+
+  const total_due_formatter = (amount) => {
+    return "$" + amount;
+  };
 
   return (
     <div>
@@ -33,7 +38,7 @@ const Invoice = () => {
                 Due Date <b>Upon Receipt</b>
               </div>
               <div className="preview__overview__issues__field">
-                Total Due <b>$300.00</b>
+                Total Due <b>{total_due_formatter(totalDue)}</b>
               </div>
               <div className="preview__overview__issues__field preview__overview__issues__field--pay-now">
                 <button
@@ -138,7 +143,7 @@ const Invoice = () => {
                         $150.00/hr
                       </td>
                       <td role="cell" className="td-amount billing-table__td">
-                        $300.00
+                        {total_due_formatter(totalDue)}
                       </td>
                     </tr>
                   </tbody>
@@ -165,12 +170,13 @@ const Invoice = () => {
                         <span> Subtotal </span>
                       </div>
                       <div className="preview__sum-item__value">
-                        <span> $300.00 </span>
+                        <span> {total_due_formatter(totalDue)} </span>
                       </div>
                     </div>
                   </div>
                   <h3 className="preview__footer__summary__receipt">
-                    Total Due Upon Receipt <span>$300.00</span>
+                    Total Due Upon Receipt{" "}
+                    <span>{total_due_formatter(totalDue)}</span>
                   </h3>
                 </div>
               </div>
@@ -198,6 +204,7 @@ const Invoice = () => {
       </div>
       {showPaymentModal && (
         <PaymentModal
+          totalDue={total_due_formatter(totalDue)}
           setShowPaymentModal={setShowPaymentModal}
           setShowPaymentSuccessModal={setShowPaymentSuccessModal}
         />
