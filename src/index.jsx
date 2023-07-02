@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App/App";
+import "./scss/invoice.scss";
+import "./scss/modal.scss";
 
-//const root = ReactDOM.render(document.getElementById("root"));
 ReactDOM.render(<App />, document.getElementById("root"));
