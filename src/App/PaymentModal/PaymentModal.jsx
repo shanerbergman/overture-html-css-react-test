@@ -117,6 +117,7 @@ const PaymentModal = ({
             setErrors={setErrors}
           />
           <PaymentSubmit
+            paymentMethod={paymentMethod}
             errors={errors}
             setErrors={setErrors}
             totalDue={totalDue}

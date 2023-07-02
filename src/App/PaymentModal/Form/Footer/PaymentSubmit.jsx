@@ -3,18 +3,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import LockIcon from "../../../../../img/lock.svg";
 
-const PaymentSubmit = ({ totalDue, errors, setErrors }) => {
+const PaymentSubmit = ({ totalDue, paymentMethod, errors, setErrors }) => {
   const [formSubmitting, setFormSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const submitCreditCard = (e) => {
     if (Object.keys(errors.cardData).length) {
       setErrors({
         ...errors,
         showErrors: true,
       });
-
       e.preventDefault();
     } else {
+      setFormSubmitting(true);
+    }
+  };
+  const handleSubmit = (e) => {
+    if (paymentMethod === "creditCard") {
+      submitCreditCard(e);
+    } else {
+      // TODO: wire up error checking for bank account
       setFormSubmitting(true);
     }
   };

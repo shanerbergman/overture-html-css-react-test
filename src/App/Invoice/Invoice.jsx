@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import PaymentModal from "../PaymentModal/PaymentModal";
 import PaymentSuccessModal from "../PaymentSuccessModal/PaymentSuccessModal";
+import LFBrownLogo from "../../../img/lfbrown-sm.png";
 
 const Invoice = () => {
   const [paymentMade, setPaymentMade] = useState(false);
@@ -49,11 +50,9 @@ const Invoice = () => {
                 </button>
               </div>
             </div>
-            <img
-              className="preview__overview__logo"
-              src="img/lfbrown-sm.png"
-              alt="logo"
-            />
+
+            <img src={LFBrownLogo} alt="LFBrownL ogo" />
+
             <div className="preview__overview__creator">
               <div className="preview__overview__creator__full-name">
                 Bob Loblaw, Esq.
