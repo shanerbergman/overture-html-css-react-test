@@ -1,13 +1,13 @@
+This project is built using Vite
+
 To set up the project:
 `npm i`
 
-To compile the JS and CSS, use any of these three:
-```
-npm run dev
-npm run watch
-npm run production
-```
+To run Development environment
+`npm run dev`
 
-To test the project:
-`npm start`
+To build the project
+`npm run build`
 
+To preview the build locally
+`npm run preview`
