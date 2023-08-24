@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const BankAccount = ({ bankData, setBankData }) => {
+const BankAccount = ({ bankData, setBankData, errors }) => {
   const [accountNumberError, setAccountNumberError] = useState(false);
   const onChangeName = (e) => {
     setBankData({
@@ -76,6 +76,12 @@ const BankAccount = ({ bankData, setBankData }) => {
           name="cardholderName"
           placeholder="Name on account"
           className="name"
+          style={{
+            borderColor:
+              errors.showErrors && errors.bankData.nameOnAccount
+                ? "red"
+                : "#d1d1d1",
+          }}
           onChange={onChangeName}
           value={bankData.nameOnAccount}
         />
@@ -84,6 +90,12 @@ const BankAccount = ({ bankData, setBankData }) => {
         <label htmlFor="accountType">Account Type</label>
         <select
           name="accountType"
+          style={{
+            borderColor:
+              errors.showErrors && errors.bankData.accountType
+                ? "red"
+                : "#d1d1d1",
+          }}
           onChange={onAccountTypeChange}
           value={bankData.accountType}
         >
@@ -100,6 +112,12 @@ const BankAccount = ({ bankData, setBankData }) => {
           name="routingNumber"
           id="routingNumber"
           placeholder="123456789"
+          style={{
+            borderColor:
+              errors.showErrors && errors.bankData.routingNumber
+                ? "red"
+                : "#d1d1d1",
+          }}
           onChange={handleRoutingNumberChange}
           value={bankData.routingNumber}
         />
@@ -107,11 +125,16 @@ const BankAccount = ({ bankData, setBankData }) => {
       <div className="payment-modal__inputs__input">
         <label htmlFor="accountNumber">Account Number</label>
         <input
-          style={{ borderColor: accountNumberError ? "red" : "#d1d1d1" }}
           type="text"
           name="accountNumber"
           id="accountNumber"
           placeholder="12345678900000000"
+          style={{
+            borderColor:
+              errors.showErrors && errors.bankData.accountNumber
+                ? "red"
+                : "#d1d1d1",
+          }}
           onChange={handleAccountNumberChange}
           value={bankData.accountNumber}
         />
@@ -119,7 +142,12 @@ const BankAccount = ({ bankData, setBankData }) => {
       <div className="payment-modal__inputs__input">
         <label htmlFor="accountNumberConfirm">Confirm Account Number</label>
         <input
-          style={{ borderColor: accountNumberError ? "red" : "#d1d1d1" }}
+          style={{
+            borderColor:
+              errors.showErrors && errors.bankData.accountNumberConfirm
+                ? "red"
+                : "#d1d1d1",
+          }}
           type="text"
           name="accountNumberConfirm"
           id="accountNumberConfirm"

@@ -70,7 +70,7 @@ const CreditCard = ({ cardData, setCardData, errors }) => {
 
     return expDateFormatter;
   };
-  console.log("errrors", errors);
+
   return (
     <div
       id="card-js"

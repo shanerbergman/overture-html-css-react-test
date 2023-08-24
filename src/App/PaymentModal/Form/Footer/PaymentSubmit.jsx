@@ -17,12 +17,25 @@ const PaymentSubmit = ({ totalDue, paymentMethod, errors, setErrors }) => {
       setFormSubmitting(true);
     }
   };
+
+  const submitBankAccount = (e) => {
+    console.log("ERR", errors);
+    if (Object.keys(errors.bankData).length) {
+      setErrors({
+        ...errors,
+        showErrors: true,
+      });
+      e.preventDefault();
+    } else {
+      setFormSubmitting(true);
+    }
+  };
+
   const handleSubmit = (e) => {
     if (paymentMethod === "creditCard") {
       submitCreditCard(e);
     } else {
-      // TODO: wire up error checking for bank account
-      setFormSubmitting(true);
+      submitBankAccount(e);
     }
   };
 

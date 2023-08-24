@@ -24,6 +24,13 @@ const PaymentModal = ({
       cvc: true,
       zip: true,
     },
+    bankData: {
+      accountNumber: true,
+      routingNumber: true,
+      nameOnAccount: true,
+      accountType: true,
+      accountNumberConfirm: true,
+    },
   });
 
   const [bankData, setBankData] = useState({
@@ -113,6 +120,7 @@ const PaymentModal = ({
           <Disclaimer totalDue={totalDue} />
           <PaymentErrors
             cardData={cardData}
+            bankData={bankData}
             errors={errors}
             setErrors={setErrors}
           />

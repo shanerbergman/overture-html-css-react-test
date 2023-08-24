@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const PaymentErrors = ({ cardData, errors, setErrors }) => {
+const PaymentErrors = ({ cardData, bankData, errors, setErrors }) => {
   console.log("cardData", cardData);
   useEffect(() => {
     // check cardno for errors
@@ -63,7 +63,68 @@ const PaymentErrors = ({ cardData, errors, setErrors }) => {
         ...errors,
       });
     }
-  }, [cardData]);
+
+    if (bankData.accountNumber.length > 6) {
+      delete errors.bankData.accountNumber;
+      setErrors({
+        ...errors,
+      });
+    } else {
+      errors.bankData.accountNumber = true;
+      setErrors({
+        ...errors,
+      });
+    }
+    if (bankData.routingNumber.length > 6) {
+      delete errors.bankData.routingNumber;
+      setErrors({
+        ...errors,
+      });
+    } else {
+      errors.bankData.routingNumber = true;
+      setErrors({
+        ...errors,
+      });
+    }
+    if (bankData.nameOnAccount.length > 1) {
+      delete errors.bankData.nameOnAccount;
+      setErrors({
+        ...errors,
+      });
+    } else {
+      errors.bankData.nameOnAccount = true;
+      setErrors({
+        ...errors,
+      });
+    }
+
+    if (
+      bankData.accountType === "checking" ||
+      bankData.accountType === "businessChecking" ||
+      bankData.accountType === "savings"
+    ) {
+      delete errors.bankData.accountType;
+      setErrors({
+        ...errors,
+      });
+    } else {
+      errors.bankData.accountType = true;
+      setErrors({
+        ...errors,
+      });
+    }
+    if (bankData.accountNumberConfirm === bankData.accountNumber) {
+      delete errors.bankData.accountNumberConfirm;
+      setErrors({
+        ...errors,
+      });
+    } else {
+      errors.bankData.accountNumberConfirm = true;
+      setErrors({
+        ...errors,
+      });
+    }
+  }, [cardData, bankData]);
 
   return <div className="payment-error"></div>;
 };

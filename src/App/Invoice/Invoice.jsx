@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PaymentModal from "../PaymentModal/PaymentModal";
 import PaymentSuccessModal from "../PaymentSuccessModal/PaymentSuccessModal";
-import LFBrownLogo from "../../../img/lfbrown-sm.png";
+import GenericLogo from "../../../img/logo-generic.png";
 
 const Invoice = () => {
   const [paymentMade, setPaymentMade] = useState(false);
@@ -18,7 +18,7 @@ const Invoice = () => {
       {paymentMade && (
         <div className="invoice-status-bar invoice-status-bar--paid invoice-status-bar--client-facing">
           <div className="invoice-status-bar__text text--center">
-            This invoice was paid on <b>{{ payment_made_at }}</b>.
+            This invoice was paid on <b></b>.
           </div>
         </div>
       )}
@@ -51,14 +51,14 @@ const Invoice = () => {
               </div>
             </div>
 
-            <img src={LFBrownLogo} alt="LFBrownL ogo" />
+            <img src={GenericLogo} alt="LFBrownL ogo" width="300" />
 
             <div className="preview__overview__creator">
               <div className="preview__overview__creator__full-name">
                 Bob Loblaw, Esq.
               </div>
               <div className="preview__overview__creator__email">
-                bloblaw@lfbrown.law
+                bob-blah-blah@attorney.law
               </div>
             </div>
           </div>
@@ -66,11 +66,9 @@ const Invoice = () => {
             <div className="preview__header">
               <div className="preview__header__client">
                 <div className="loose-caps">Bill To</div>
-                <div className="preview__header__client-name">
-                  Sean Williams
-                </div>
+                <div className="preview__header__client-name">Bob BlahBlah</div>
                 <div className="preview__header__client-email">
-                  swilliams@overture.law
+                  bob-blah-blah@attorney.law
                 </div>
               </div>
               <h1 className="preview__header__title">Invoice</h1>
@@ -193,11 +191,8 @@ const Invoice = () => {
               </div>
             </div>
           </div>
-          <a href="https://overture.law">
-            <div className="preview__mark">
-              Invoice built with:
-              <img src="img/overture-logo-black.svg" alt="Overture" />{" "}
-            </div>
+          <a href="/">
+            <div className="preview__mark">Invoice</div>
           </a>
         </div>
       </div>

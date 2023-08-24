@@ -39,8 +39,8 @@ const Disclaimer = ({ totalDue }) => {
         color: "#7d7d7d",
       }}
     >
-      By selecting Pay, I authorize Overture Law, P.C. to charge {totalDue} to
-      my card on {prettyDate}.
+      By selecting Pay, I authorize Bob BlahBlah Law, P.C. to charge {totalDue}{" "}
+      to my card on {prettyDate}.
     </div>
   );
 };
